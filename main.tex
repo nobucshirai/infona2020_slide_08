@@ -1,0 +1,590 @@
+% [Overleaf] https://www.overleaf.com/read/pdhrzpmhmhbp
+% [YouTube] https://youtu.be/kh-Khsm8d6g
+% [GitHub] https://github.com/nobucshirai/infona2020_slide_08
+\documentclass[dvipdfmx,aspectratio=169,20pt]{beamer}
+\usepackage{bxdpx-beamer}
+
+% Beamer theme
+\usetheme{Boadilla}
+
+%%%%% JAPANESE FONT SETTINGS %%%%%
+\usepackage[utf8]{inputenc}
+\usepackage{pxjahyper}
+\renewcommand{\kanjifamilydefault}{\gtdefault} % for Gothic Japanese fonts
+\newcommand{\myfontsetting}[3]{{\fontsize{#1}{#2}\selectfont #3}}
+\usepackage[deluxe,uplatex]{otf} % needed to use super bold Japanese fonts
+\usepackage[unicode,noto-otc]{pxchfon} % needed to use super bold Japanese fonts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% SETTINGS FOR MATH SYMBOLS %%%%%
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+%\usepackage{graphicx}
+\usepackage{latexsym}
+\usefonttheme{professionalfonts} % use Serif fonts for equations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fancybox,ascmac}
+\usepackage{url}
+\usepackage[many]{tcolorbox}
+
+%%%%% ALGORITHM SETTING %%%%%
+\usepackage{algorithm}
+\usepackage[noend]{algorithmic}
+\algsetup{linenosize=\color{fg!50}\fontsize{8pt}{8pt}\selectfont}
+\renewcommand\algorithmicdo{\bfseries :}
+\renewcommand\algorithmicthen{\bfseries :}
+\renewcommand\algorithmicrequire{\textbf{Input:}}
+\renewcommand\algorithmicensure{\textbf{Output:}}
+\renewcommand{\algorithmicprint}{\textbf{break}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{myblue1}{RGB}{45,130,200}
+\definecolor{myblue2}{RGB}{26,89,142}
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor*{structure}{fg=myblue1,bg=blue}
+\setbeamercolor{block title}{fg=myblue1!50!black}
+\setbeamercolor*{block title example}{fg=white,bg=myblue2}
+\setbeamercolor*{palette primary}{use=structure,fg=white,bg=structure.fg}
+\setbeamercolor*{palette secondary}{use=structure,fg=white,bg=structure.fg!75!black}
+\setbeamercolor*{palette tertiary}{use=structure,fg=white,bg=structure.fg!50!black}
+\setbeamercolor*{palette quaternary}{fg=black,bg=myblue1}
+
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamerfont{section in toc}{series=\mdseries}
+\setbeamerfont{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{date}{size=\small}
+
+\setbeamertemplate{block title}[shadow=false]
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+%%%%% BEAMER FOOTLINE SETTINGS %%%%%%
+\setbeamertemplate{footline}[frame number]{}
+\setbeamerfont{footline}{size=\bf\footnotesize\small}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%% BEAMER ITEM SETTINGS %%%%%
+\setbeamertemplate{itemize item}[circle]
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{enumerate item}[circle]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% tikz関係 %%%
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+%%%%% START_TAG B %%%%%
+\frametitle{[問題] V\hspace{-.1em}I\hspace{-.1em}I-B}
+%\noindent{\bf V\hspace{-.1em}I\hspace{-.1em}I-B.} 
+
+\myfontsetting{12pt}{12pt}{
+(1) 3次自然スプライン補間を用いて3つのデータ点 $(x_0,y_0)=(0,1)$, $(x_1,y_1)=(1,2)$, $(x_2,y_2)=(4,2)$ を通る2本の3次の区分的補間多項式 $p_i(x) = y_i + a_i (x-x_i) + b_i (x-x_i)^2 + c_i (x-x_i)^3$, $(i=0,1)$ を求めよ。%\\
+}\\
+\myfontsetting{12pt}{12pt}{
+(2) 3次自然スプライン補間を用いて5つのデータ点 $(x_0,y_0)=(0,1)$, $(x_1,y_1)=(1,2)$, $(x_2,y_2)=(4,2)$, $(x_3,y_3)=(5,1)$, $(x_4,y_4)=(6,0)$ を通る4本の3次の区分的補間多項式 $p_i(x) = y_i + a_i (x-x_i) + b_i (x-x_i)^2 + c_i (x-x_i)^3$, $(i=0,1,2,3)$ を求めるプログラムを作成し、$a_i, b_i, c_i$ $(i=0,1,2,3)$ を有効数字10進3桁で4桁目を四捨五入して答えよ。
+}
+%%%%% END_TAG B %%%%%
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{[略解] V\hspace{-.1em}I\hspace{-.1em}I-B}
+(1) $P_0(x)=1+\frac{9}{8}x - \frac{1}{8}x^3$,
+
+\vspace{2mm}
+
+$P_1(x)=2+\frac{3}{4}(x-1)-\frac{3}{8}(x-1)^2+\frac{1}{24}(x-1)^3$
+
+\vspace{5mm}
+
+(2) 
+
+\vspace{-5mm}
+\myfontsetting{18pt}{18pt}{
+\[
+\begin{matrix}
+a_0 = 1.09, & b_0 = 0, &c_0 = -8.96\times 10^{-2}\\
+a_1 = 0.821, & b_1 =-0.269, & c_1 = -1.57 \times 10^{-3}\\
+a_2 = -0.835, & b_2 = -0.283, & c_2 = 0.118\\
+a_3 = -1.05, & b_3 = 7.08\times 10^{-2}, & c_3 = -2.36\times 10^{-2}
+\end{matrix}
+\]
+}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\myfontsetting{24pt}{24pt}{3次自然スプライン補間} \myfontsetting{10pt}{10pt}{(Cubic natural spline interpolation)}}
+\begin{itemize}
+    %\setlength{\itemsep}{0.15cm}
+    \item \myfontsetting{15pt}{15pt}{\bf 
+    データ点} \myfontsetting{12pt}{12pt}{ ($n+1$ 点)}\myfontsetting{18pt}{18pt}{\bf :} \myfontsetting{15pt}{15pt}{ 
+        $(x_k, y_k)$} \myfontsetting{10pt}{10pt}{ $(0\le k\le n)$}
+    \item \myfontsetting{15pt}{15pt}{\bf 
+    3次補間多項式} \myfontsetting{12pt}{12pt}{ ($n$ 本)}
+    \begin{itemize}
+        \item[] \myfontsetting{12pt}{12pt}{ 
+        $p_i(x) = y_i + a_i (x-x_i) + b_i (x-x_i)^2 + c_i (x-x_i)^3$} \myfontsetting{10pt}{10pt}{ $(0\le i \le n-2)$}
+    \end{itemize}
+    \item \myfontsetting{15pt}{15pt}{\bf 
+    変数} \myfontsetting{12pt}{12pt}{ ($3n$ 個)}\myfontsetting{15pt}{15pt}{\bf 
+    :} \myfontsetting{15pt}{15pt}{  $a_i, b_i, c_i$ \myfontsetting{10pt}{10pt}{ $(0 \le i \le n-1)$}}
+    \item \myfontsetting{15pt}{15pt}{\bf 
+    条件} \myfontsetting{12pt}{12pt}{ ($3n$ 本)}
+    %\vspace{2mm}
+    \begin{itemize}
+        \item[] \myfontsetting{10pt}{10pt}{
+        $p_i(x_{i+1}) = y_{i+1}$ \myfontsetting{8pt}{8pt}{ $(0\le i \le n-2)$} $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{1}}, 
+        $p_{n-1}(x_n) = y_n$ $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{2}}
+        }
+        \vspace{2mm}
+        \item [] \myfontsetting{10pt}{10pt}{
+        $p_0^\prime(x_{1}) = p_{1}^\prime(x_{1})$ $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{3}}, 
+        $p_i^\prime(x_{i+1}) = p_{i+1}^\prime(x_{i+1})$ \myfontsetting{8pt}{8pt}{ $(1\le i \le n-3)$} $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{4}
+        }
+        \item[] \myfontsetting{10pt}{10pt}{
+        $p_{n-2}^\prime(x_{n-1}) = p_{n-1}^\prime(x_{n-1})$ $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{5}},
+        $p_i^{\prime\prime}(x_{i+1}) = p_{i+1}^{\prime\prime}(x_{i+1})$} \myfontsetting{8pt}{8pt}{ $(0\le i \le n-2)$} $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{6}}
+        }
+        \item [] \myfontsetting{10pt}{10pt}{ $p_0^{\prime\prime}(x_0)=0$ $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{7}}, $p_{n-1}^{\prime\prime}(x_n)=0$ $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{8}}
+        }
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{{\large 3次自然スプライン補間の計算方法 (1)}}
+
+\begin{itemize}
+    \setlength{\itemsep}{0.15cm}
+    \item \myfontsetting{15pt}{15pt}{
+    条件を整理すると{\bf 3重対角行列}を係数行列に持つ連立一次方程式を解く問題に帰着できる
+    }
+    \begin{itemize}
+        %\setlength{\itemsep}{0.1cm}
+        \item \myfontsetting{12pt}{12pt}{
+    乗除算の回数は $\mathcal{O}(n)$ ・必要な配列の大きさも $\mathcal{O}(n)$
+    }
+    \end{itemize}
+    \item \myfontsetting{15pt}{15pt}{
+    条件整理の方針
+    }
+    \begin{itemize}
+        \setlength{\itemsep}{0.15cm}
+        \item \myfontsetting{12pt}{12pt}{
+        $h_i = x_{i+1}-x_i$, $\varDelta y_i = y_{i+1} - y_i$ \myfontsetting{8pt}{8pt}{ $(0\le i \le n-1)$} と定義}
+        \item \myfontsetting{12pt}{12pt}{ 
+        \myfontsetting{8pt}{8pt}{\bf \circled{1}, \circled{2}, \circled{6}, \circled{8}} を用いて $a_i, c_i$ を $b_i$ で表し \myfontsetting{10pt}{10pt}{ $(0\le i \le n-1)$}\\
+        \myfontsetting{8pt}{8pt}{\bf \circled{3}, \circled{4}, \circled{5}} に代入して $b_i$ に関する方程式を $n-1$ 本得る
+        }
+        \item \myfontsetting{12pt}{12pt}{
+        \myfontsetting{8pt}{8pt}{\bf \circled{7}} より $b_0=0$ であり、$u_1 = 0$, $g_0 = 0$ を用いて便宜的に $b_0 + u_1 b_1 = g_0$ $\cdots$ \myfontsetting{8pt}{8pt}{\bf \circled{7}}$^\prime$ と表す
+        }
+    \end{itemize}
+\end{itemize}
+
+\vspace{-3mm}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{{\large 3次自然スプライン補間の計算方法 (2)}}
+
+\begin{itemize}
+    \item \myfontsetting{15pt}{15pt}{
+    \myfontsetting{8pt}{8pt}{\bf \circled{6}, \circled{8}} より
+    }
+    \begin{itemize}
+        \setlength{\itemsep}{0.25cm}
+        \item[] \myfontsetting{12pt}{12pt}{
+        $\displaystyle c_i =\frac{b_{i+1} - b_i}{3h_i}$ \hspace{2mm} \myfontsetting{10pt}{10pt}{ $(0\le i \le n-2)$}
+        }
+        \item[] \myfontsetting{12pt}{12pt}{
+        $\displaystyle c_{n-1} = - \frac{b_{n-1}}{3h_{n-1}}$
+        }
+    \end{itemize}
+    \item \myfontsetting{15pt}{15pt}{
+    \myfontsetting{8pt}{8pt}{\bf \circled{1}, \circled{2}, \circled{6}, \circled{8}} より
+    }
+    \begin{itemize}
+        \setlength{\itemsep}{0.25cm}
+        \item[] \myfontsetting{12pt}{12pt}{
+        $\displaystyle a_i=\frac{\varDelta y_i}{h_i} - \frac{1}{3} (2b_i+b_{i+1})h_i$ \hspace{2mm} \myfontsetting{10pt}{10pt}{ $(0\le i \le n-2)$}
+        }
+        \item[] \myfontsetting{12pt}{12pt}{
+        $\displaystyle a_{n-1} = \frac{\varDelta y_{n-1}}{h_{n-1}} - \frac{2}{3} b_{n-1}h_{n-1}$
+        }
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{{\large 3次自然スプライン補間の計算方法 (3)}}
+
+\begin{itemize}
+    \item \myfontsetting{15pt}{15pt}{
+    \myfontsetting{8pt}{8pt}{\bf \circled{7}}$^\prime$, \hspace{-3mm} \myfontsetting{8pt}{8pt}{\bf \circled{3}, \circled{4}, \circled{5}} より
+    }
+    \vspace{-5mm}
+    \item[] \myfontsetting{12pt}{14pt}{
+%\myfontsetting{10pt}{12pt}{
+\begin{align*}
+    &\begin{bmatrix}
+        d_0 & u_1 & & & & \\
+        \ell_0 & d_1 & u_2 & & &\\
+        & \ell_1 & d_2 & u_3 & &\\
+        & & \ddots & \ddots & \ddots & \\
+        & & & \ell_{n-3} & d_{n-2} & u_{n-1}\\
+        & & & & \ell_{n-2} & d_{n-1}\\
+    \end{bmatrix}\begin{bmatrix}
+    b_0\\ b_1\\ b_2\\ \vdots\\b_{n-2}\\b_{n-1}
+    \end{bmatrix} = \begin{bmatrix}
+    g_0\\ g_1\\ g_2\\ \vdots\\ g_{n-2}\\ g_{n-1}
+    \end{bmatrix}
+\end{align*}
+}
+    %\vspace{-7mm}
+    \item[] \myfontsetting{12pt}{12pt}{
+    ここで} 
+    \myfontsetting{10pt}{10pt}{ 
+    $d_i=1$ \myfontsetting{8pt}{8pt}{ $(0\le i \le n-1)$}, $u_1 = 0$, $u_{i} = \frac{h_{i-1}}{2(h_{i-1}+h_{i-2})}$ \myfontsetting{8pt}{8pt}{ $(2\le i \le n-1)$},
+    $\ell_0 = 0$, $\ell_i = \frac{h_i}{2(h_{i+1} + h_i)}$ \myfontsetting{8pt}{8pt}{ $(1\le i \le n-2)$}
+    , $g_0 = 0$, $g_i = \frac{3}{2} \frac{\left( \frac{\varDelta y_i}{h_i}-\frac{\varDelta y_{i-1}}{h_{i-1}} \right)}{h_i + h_{i-1}}$ \myfontsetting{8pt}{8pt}{$(1\le i \le n-1)$}\\
+    \myfontsetting{8pt}{8pt}{\bf\color{myblue1} [完全スプライン補間の場合 $u_1=\frac{1}{2}$, $g_0=\frac{3}{2}(\frac{\varDelta y_0}{h_0} - y_0^\prime)/h_0$, $l_{n-2}=\frac{1}{2}$, $g_{n-1} = \frac{3}{2}(y^\prime_n - \frac{\varDelta y_{n-1}}{h_{n-1}})/h_{n-1}$]}
+    }
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\myfontsetting{24pt}{24pt}{[手法] 3次自然スプライン補間の準備}}
+    \begin{block}{{\bf\small Preparation for cubic natural spline interpolation}}
+        \myfontsetting{15pt}{18pt}{
+        \begin{algorithmic}[1]
+            \REQUIRE $n$, $x_i$, $y_i$ \myfontsetting{10pt}{10pt}{ 
+            $(0\le i\le n)$}
+            \ENSURE $h_i$, $\varDelta y_i$  \myfontsetting{10pt}{10pt}{ 
+            $(0\le i\le n-1)$}
+            \FOR{$i=0,1,\dots,n-1$}
+            \STATE $h_i \leftarrow x_{i+1} - x_i$
+            \STATE $\varDelta y_i \leftarrow y_{i+1}-y_i$
+            \ENDFOR
+        \end{algorithmic}
+        }
+    \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\myfontsetting{18pt}{18pt}{[手法] 3次自然スプライン補間---3重対角行列の構成}}
+    \begin{block}{\myfontsetting{12pt}{12pt}{\bf Cubic natural spline interpolation---construction of tridiagonal matrix}}
+        \myfontsetting{10pt}{12pt}{
+        \begin{algorithmic}[1]
+            \REQUIRE $n$, $h_i$, $\varDelta y_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-1)$}
+            \ENSURE $d_i$, $g_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-1)$}, $u_i$ \myfontsetting{8pt}{8pt}{ 
+            $(1\le i\le n-1)$}, $\ell_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-2)$}
+            \FOR{$i=0, 1,\dots, n-1$}
+            \STATE $d_i \leftarrow 1$
+            \ENDFOR
+            \STATE $g_0 \leftarrow 0$
+            \FOR{$i=1,2, \dots, n-1$}
+            \STATE $g_i \leftarrow \frac{3}{2}\times \frac{(\varDelta y_i/h_i - \varDelta y_{i-1}/h_{i-1})}{h_i+h_{i-1}}$
+            \ENDFOR
+            \STATE $u_1 \leftarrow 0$
+            \FOR{$i=2,3,\cdots, n-1$}
+            \STATE $u_i \leftarrow \frac{1}{2} \times  \frac{h_{i-1}}{h_{i-1}+h_{i-2}}$
+            \ENDFOR
+            \STATE $\ell_0 \leftarrow 0$
+            \FOR{$i=1,2,\cdots, n-2$}
+            \STATE $\ell_i \leftarrow \frac{1}{2} \times  \frac{h_{i}}{h_{i+1}+h_i}$
+            \ENDFOR
+ \end{algorithmic}
+        }
+    \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\myfontsetting{15pt}{15pt}{[手法] 連立一次方程式の数値解法--係数行列が3重対角の場合}}
+    \begin{block}{{\bf\small Solution of Tridiagonal Systems}}
+        \myfontsetting{15pt}{18pt}{
+        \begin{algorithmic}[1]
+            \REQUIRE $n$, $d_i$, $g_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-1)$}, $u_i$ \myfontsetting{8pt}{8pt}{ 
+            $(1\le i\le n-1)$}, $\ell_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-2)$}
+            \ENSURE $b_i$ \myfontsetting{8pt}{8pt}{ $(0\le i\le n-1)$}
+            \FOR{$i=1,2,\dots,n-1$}
+            \STATE $d_i \leftarrow d_i - u_i \times \left(\frac{\ell_{i-1}}{{d_{i-1}}}\right)$
+            \STATE $g_i \leftarrow g_i-g_{i-1} \times \left( \frac{\ell_{i-1}}{d_{i-1}} \right)$
+            \ENDFOR
+            \STATE $b_{n-1} \leftarrow \frac{g_{n-1}}{d_{n-1}}$
+            \FOR{$i=n-2,n-3,\dots,0$}
+            \STATE $b_i \leftarrow \left(g_i - u_{i+1}\, b_{i+1} \right)/d_i$
+            \ENDFOR
+        \end{algorithmic}
+        }
+    \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\myfontsetting{18pt}{18pt}{[手法] 3次自然スプライン補間---$b_i$ から$a_i$, $c_i$ を求める}}
+    \begin{block}{\myfontsetting{15pt}{15pt}{\bf Cubic natural spline interpolation---calculate $a_i$ and $c_i$ from $b_i$}}
+        \myfontsetting{15pt}{20pt}{
+        \begin{algorithmic}[1]
+            \REQUIRE $n$, $h_i$, $\varDelta y_i$, $b_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-1)$}
+            \ENSURE $a_i$, $c_i$ \myfontsetting{8pt}{8pt}{ 
+            $(0\le i\le n-1)$}
+            \FOR{$i=0, 1, \dots, n-2$}
+            \STATE $a_i \leftarrow \frac{\varDelta y_i}{h_i} - \frac{1}{3}\times (2b_i+b_{i+1})h_i$
+            \ENDFOR
+            \STATE $a_{n-1} = \frac{\varDelta y_{n-1}}{h_{n-1}} - \frac{2}{3}\times b_{n-1}h_{n-1}$
+            \FOR{$i=0, 1, \cdots, n-2$}
+            \STATE $c_i \leftarrow \frac{b_{i+1}-b_i}{3h_i}$
+            \ENDFOR
+            \STATE $c_{n-1} \leftarrow -\frac{b_{n-1}}{3h_{n-1}}$
+        \end{algorithmic}
+        }
+    \end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%タイトルページ
+
+\title{最小2乗法}
+\titlegraphic{\vspace{-7mm}\flushright\includegraphics[width=1.8cm,height=1.8cm]{hattari_kun_good_org.eps}}
+
+\setbeamertemplate{title page}{%
+    \begin{flushright}
+        \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+    \end{flushright}
+    \vspace{-0.6cm}
+    \hspace{1.5cm}{\selectfont\usebeamerfont{subtitle} \usebeamercolor[fg]{subtitle} [\href{https://youtu.be/kh-Khsm8d6g}{数値解析 第8回}] \par}
+    \vspace{0.5cm}
+    %\vspace{2.5em}
+    {\centering\usebeamerfont{title} \usebeamercolor[fg]{title} \inserttitle \par}
+    \vspace{0.5cm}
+    \begin{center}
+        データにフィットする関数を求める
+    \end{center}
+}
+
+\date[\todey]{}
+
+\frame{\titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{最小2乗法 \myfontsetting{15pt}{15pt}{ (Least squares approximation)}}
+
+\begin{itemize}
+    \setlength{\itemsep}{0.05cm}
+    \item \myfontsetting{15pt}{15pt}{
+    与えられた $m$ 個のデータ点 $(x_i,y_i)$ \myfontsetting{12pt}{12pt}{ $(1\le i \le m)$} に対して関数 $f(x)$ を当てはめる  \myfontsetting{10pt}{10pt}{\bf (フィッティングする)} 方法
+    }
+    \begin{itemize}
+        %\setlength{\itemsep}{0.05cm}
+        \item \myfontsetting{12pt}{12pt}{
+        誤差を含むデータに対しても適用可能
+        }
+    \end{itemize}
+    \item \myfontsetting{15pt}{15pt}{
+    {\bf 残差の2乗和} \myfontsetting{12pt}{12pt}{$\displaystyle
+    S=\sum_{i=1}^m \left\{ y_i -f(x_i) \right\}^2$} を用いて当てはまりの良さを評価
+    }
+    \begin{itemize}
+        %\setlength{\itemsep}{0.05cm}
+        \item \myfontsetting{12pt}{12pt}{
+        $S$ が最小となる $f(x)$ を求める
+        }
+    \end{itemize}
+    \item \myfontsetting{15pt}{20pt}{
+    $f(x)$ として $n$ 次多項式 \myfontsetting{12pt}{12pt}{ $p_n(x)=a_0 + a_1x + \dots + a_nx^n$} \myfontsetting{10pt}{10pt}{$(m>n)$}を用いる場合 {\bf 線形最小2乗法}$^1$と呼ぶ
+    }
+\end{itemize}
+
+\vspace{-2mm}
+
+\myfontsetting{8pt}{8pt}{ $^1$ 「線形」は多項式の係数に対して使われており $f(x)$ に対して使われているわけではないことに注意}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\Large 線形最小2乗法
+\myfontsetting{15pt}{15pt}{ (Linear least squares approximation)}}
+\begin{itemize}
+    \setlength{\itemsep}{0.1cm}
+    \item \myfontsetting{15pt}{15pt}{
+    $S$ が最小となる時 $a_0,a_1,\dots, a_n$ の偏微分が0となる事を用いて{\bf 正規方程式}\myfontsetting{10pt}{10pt}{ (normal equation)} を構成する
+    }
+    \begin{itemize}
+        \setlength{\itemsep}{0.2cm}
+        \item \myfontsetting{12pt}{12pt}{
+        $\displaystyle \frac{\partial S}{\partial a_0} = \frac{\partial S}{\partial a_1} = \cdots = \frac{\partial S}{\partial a_n}=0$
+        }
+    \end{itemize}
+    \vspace{2mm}
+    \item \myfontsetting{15pt}{15pt}{ {\bf 正規方程式} $(X^\mathsf{T} X) \bm{a} = X^\mathsf{T} \bm{y}$ を $\bm{a}$ について解けばよい}
+    \begin{itemize}
+        \vspace{2mm}
+        \item
+        \myfontsetting{12pt}{12pt}{ 
+        ここで
+        $X = \begin{bmatrix} 1 & x_1 & \cdots & x_1^n\\
+        1 & x_2 & \cdots & x_2^n\\
+        1 & x_3 & \cdots & x_3^n\\
+        \vdots & \vdots & \ddots & \vdots\\
+        1 & x_m & \cdots & x_m^n
+        \end{bmatrix}$, $\bm{a} = \begin{bmatrix}
+        a_0\\a_1\\ \vdots \\a_n
+        \end{bmatrix}$, $\bm{y}= \begin{bmatrix}
+        y_0\\y_1\\ \vdots \\y_m
+        \end{bmatrix}$
+        とおいた
+        }
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+%%%%% START_TAG A %%%%%
+%\noindent{\bf [V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I. 最小2乗法]}%RETURN
+
+%\noindent{\bf V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A.}
+\frametitle{[問題] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A (1)}
+\myfontsetting{15pt}{20pt}{
+$m$ 個 $(m>2)$ のデータ点 $(x_i, y_i)$ $(1\le i\le m)$ に対し最小2乗法を用いて多項式 $p_1(x)=a_0 + a_1 x$ を当てはめる場合の正規方程式を導出せよ。また求めた正規方程式は
+\myfontsetting{15pt}{15pt}{
+\begin{equation*}
+    X = \begin{bmatrix}
+    1 & x_1\\
+    1 & x_2\\
+    \vdots & \vdots\\
+    1 & x_m\\
+    \end{bmatrix}, \bm{a} = \begin{bmatrix}
+        a_0\\a_1
+    \end{bmatrix}, 
+    \bm{y} = \begin{bmatrix}
+        y_0\\y_1\\ \vdots \\y_m
+        \end{bmatrix}
+\end{equation*}
+}
+を用いて $(X^\mathsf{T}X) \bm{a} = X^\mathsf{T} \bm{y}$と表せる事を示せ。%\\
+}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{[問題] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A (2)}
+\myfontsetting{18pt}{21pt}{
+問1で求めた正規方程式を $\bm{a}$ について解く事で $a_1$ を $s_x^2$, $s_{xy}$ を用いて、$a_0$ を $a_1, \bar{x},\bar{y}$ を用いて表せ。
+ここで $s_x^2$ は $x_i$ の分散、$s_{xy}$ は $x_i$ と $y_i$ の共分散、 $\bar{x}$ は $x_i$ の平均値、$\bar{y}$ は $y_i$ の平均値を表す。%\\
+}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{[問題] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A (3)}
+
+\myfontsetting{15pt}{20pt}{
+問2で求めた式を用いて以下の表にある8つのデータ点の残差の2乗和を最小化する $a_0$, $a_1$ および残差の2乗和の最小値を求めるプログラムを作成せよ。これらの数値は有効数字4桁で5桁目を四捨五入して答えよ。
+作成したプログラムも提出すること。プログラミング言語は問わない。
+
+\begin{table}[htbp]
+    \centering
+\begin{tabular}{|c||c|c|c|c|c|c|c|c|}
+\hline
+$x$ & 0 & 1 & 1 & 2 & 2 & 3 & 5 & 6\\
+\hline
+$y$ & 1& 2& 3& 15& 15& 33&  75& 146\\
+\hline
+\end{tabular}
+\end{table}
+}
+%%%%% END_TAG A %%%%%
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{[略解] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A (1)}
+%\vspace{-0.5cm}
+
+\myfontsetting{15pt}{18pt}{ 
+\myfontsetting{12pt}{12pt}{
+        $\displaystyle \frac{\partial S}{\partial a_0} = \frac{\partial S}{\partial a_1}=0$
+}より正規方程式は以下のように表せる。
+
+\myfontsetting{15pt}{20pt}{ 
+\begin{equation*}
+    \begin{bmatrix}
+        \sum_{i=1}^m 1 &
+        \sum_{i=1}^m x_i \\
+        \sum_{i=1}^m x_i &
+        \sum_{i=1}^m x_i^2
+    \end{bmatrix}
+    \begin{bmatrix}
+        a_0\\a_1
+    \end{bmatrix} =
+    \begin{bmatrix}
+        \sum_{i=1}^m y_i\\
+        \sum_{i=1}^m x_i y_i
+    \end{bmatrix}
+\end{equation*}
+}
+これは確かに $(X^\mathsf{T}X) \bm{a} = X^\mathsf{T} \bm{y}$ と等しい。
+}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{[略解] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A (2)}
+\myfontsetting{15pt}{15pt}{ 
+\begin{align*}
+    & a_0 = \frac{m \left(\sum_{i=1}^m x_i y_i\right) - \left(\sum_{i=1}^m x_i \right) \left(\sum_{i=1}^m y_i \right)}{m \left(\sum_{i=1}^m x_i^2 \right) -  \left(\sum_{i=1}^m x_i \right)^2} =\frac{s_{xy}}{s_x^2}\\
+    &a_1 = \bar{y} - a_0 \bar{x}
+\end{align*}
+}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{[略解] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A (3)}
+$a_0 = -21.25$
+
+$a_1 = 23.00$
+
+残差の2乗和の最小値 $2.112\times 10^3$
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{\myfontsetting{20pt}{20pt}{ [補足] 重み付き最小2乗法 \myfontsetting{10pt}{10pt}{ (Weighted least squares approximation)}}}
+
+\begin{itemize}
+    \setlength{\itemsep}{0.05cm}
+    \item \myfontsetting{18pt}{18pt}{
+    データ点の各点で誤差の分散 $\sigma_i^2$ が分かっている場合、残差の2乗和に{\bf 重み}を付けた最小2乗法が用いられる
+    }
+    \vspace{2mm}
+    \begin{itemize}
+        \item \myfontsetting{15pt}{15pt}{$\displaystyle
+    S=\sum_{i=1}^m \frac{\left\{ y_i -f(x_i) \right\}^2}{\sigma_i^2}$}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+%%%%% PASTE_START_TAG B %%%%%
+\frametitle{[問題] V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-B}
+%\noindent{\bf V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-B.}
+\myfontsetting{15pt}{20pt}{
+(1) {V\hspace{-.1em}I\hspace{-.1em}I\hspace{-.1em}I-A} の問3にある8つのデータ点を最小2乗法を用いて3次多項式 $p_3(x)$ を当てはめる問題を考える。正規方程式をLU分解で解くプログラムを作成し $p_3(x)$ の係数を有効数字4桁で5桁目を四捨五入して求めよ。
+作成したプログラムも提出すること。プログラミング言語は問わない。\\
+(2) 問1の正規方程式をハウスホルダー法を用いてQR分解してから解くプログラムを作成し $p_3(x)$ の係数を有効数字4桁で5桁目を四捨五入して求めよ。
+作成したプログラムも提出すること。プログラミング言語は問わない。
+}
+%%%%% PASTE_END_TAG B %%%%%
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
